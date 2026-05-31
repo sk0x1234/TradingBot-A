@@ -12,7 +12,7 @@ jobs:
       - name: Checkout target branch
         uses: actions/checkout@v4
         with:
-          ref: main 
+          ref: master # Changed from main to master
 
       - name: Sync upstream changes
         uses: actions/github-script@v7
@@ -21,5 +21,5 @@ jobs:
             await github.rest.repos.mergeUpstream({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              branch: 'main' 
+              branch: 'master' # Changed from main to master
             });
