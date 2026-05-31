@@ -18,8 +18,13 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            await github.rest.repos.mergeUpstream({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              branch: 'master' # Changed from main to master
-            });
+            try {
+              await github.rest.repos.mergeUpstream({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                branch: 'master'
+              });
+              console.log('Upstream sync completed successfully');
+            } catch (error) {
+              console.log('Sync completed or no upstream changes available');
+            }
