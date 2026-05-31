@@ -1,0 +1,25 @@
+name: Sync Fork
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs every day at midnight UTC
+  workflow_dispatch: # Allows you to manually trigger it anytime
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout target branch
+        uses: actions/checkout@v4
+        with:
+          ref: main 
+
+      - name: Sync upstream changes
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.repos.mergeUpstream({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              branch: 'main' 
+            });
